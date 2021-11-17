@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+spec:
+  selector:
+    matchLabels:
+      app: vault
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      containers:
+      - image: vault
+        name: vault
+        env:
+        - name: VAULT_TOKEN
+          value: $VAULT_PASSWORD
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: $VAULT_PASSWORD
+        - name: VAULT_LOCAL_CONFIG
+          value: '{"backend": {"file": {"path": "/vault/file"}}, "default_lease_ttl": "16h", "max_lease_ttl": "72h"}'
+        ports:
+        - containerPort: 8200
+          protocol: TCP
+ 

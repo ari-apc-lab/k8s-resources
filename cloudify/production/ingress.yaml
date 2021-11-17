@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
+    nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: cloudify-api
+spec:
+  rules:
+  - host: cloudify.grapevine-project.eu
+    http:
+      paths:
+      - backend:
+          serviceName: cfy-manager
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - cloudify.grapevine-project.eu
+    secretName: cloudify.grapevine-project.eu

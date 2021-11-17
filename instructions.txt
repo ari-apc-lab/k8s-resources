@@ -1,0 +1,35 @@
+# grapevine_kubernetes
+
+# NGINX ingress controller (this part may have already been done by CESGA installing this is crucial for making applications available externally to the cluster at the domain name .grapevine-project.eu)
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/baremetal/deploy.yaml
+kubectl edit svc -n ingress-nginx ingress-nginx-controller
+#Add IP address of master node under externalIPs
+##
+#  externalIPs:
+#  - 10.0.3.11
+
+#install helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+
+#cloudify
+kubectl create  -f /cloudify/k8s/deployment.yaml
+kubectl create  -f /cloudify/k8s/service.yaml
+kubectl create  -f /cloudify/k8s/ingress.yaml
+
+#prometheus - pushgateway
+kubectl apply -f /prom_pushgateway/single_file_for_all.yaml
+
+# prometheus + grafana + Node exporter  + kube state metrics exporter (Prometheus Operator)
+## https://www.youtube.com/watch?v=rx1A7k-m6_g
+helm repo add https://kubernetes-charts.storage.googleapis.com
+helm install -n po stable/prometheus-operator
+
+#slurm exporter #replace USER and PASSWD with credentials to access CESGA
+kubectl apply -f /slurm_exporter/deployment.yaml
+kubectl apply -f /slurm_exporter/service.yaml
+
+# Docker Registry (not working yet)
+## https://medium.com/swlh/deploy-your-private-docker-registry-as-a-pod-in-kubernetes-f6a489bf0180

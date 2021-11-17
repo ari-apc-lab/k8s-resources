@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cfy-manager-test
+  name: cfy-manager-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cfy-manager-test
+  template:
+    metadata:
+      labels:
+        app: cfy-manager-test
+    spec:
+      containers:
+      - name: cfy-manager
+        image: atosariapclab/croupier-grapevine:6.2.0
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /data/grapevine-cloudify-test/
+          name: tmp-storage
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh","-c","/scripts/poststart.sh"]
+      volumes:
+      - name: tmp-storage
+        hostPath:
+          path: /root/grapevine-cloudify-test/tmp/
+          type: DirectoryOrCreate

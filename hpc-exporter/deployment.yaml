@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpc-exporter
+spec:
+  selector:
+    matchLabels:
+      app: hpc-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hpc-exporter
+    spec:
+      containers:
+      - image: atosariapclab/hpc-exporter-nojwt
+        name: hpc-exporter
+        ports:
+        - containerPort: 9110
+          protocol: TCP
+ 

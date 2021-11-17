@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - image: jboss/keycloak:13.0.1
+        name: keycloak
+        env:
+        - name: KEYCLOAK_USER
+          value: admin
+        - name: KEYCLOAK_PASSWORD
+          value: $KEYCLOAK_PASSWORD
+        ports:
+        - containerPort: 8080
+          protocol: TCP 
+        - containerPort: 8443
+          protocol: TCP
+       
+
+ 

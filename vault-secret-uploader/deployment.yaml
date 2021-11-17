@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-secret-uploader
+spec:
+  selector:
+    matchLabels:
+      app: vault-secret-uploader
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vault-secret-uploader
+    spec:
+      containers:
+      - image: sodaliteh2020/vault-secret-uploader
+        name: vault-secret-uploader
+        env:
+        - name: VAULT_ADMIN_TOKEN
+          value: $VAULT_PASSWORD
+        - name: VAULT_SECRET_UPLOADER_PORT
+          value: "8202"
+        - name: OIDC_CLIENT_ID
+          value: grapevine
+        - name: OIDC_CLIENT_SECRET
+          value: $OIDC_SECRET
+        - name: OIDC_INTROSPECTION_ENDPOINT
+          value: http://keycloak.grapevine-project.eu/auth/realms/grapevine/protocol/openid-connect/token/introspect
+        - name: VAULT_ADDRESS
+          value: vault.grapevine-project.eu
+        - name: VAULT_PORT
+          value: "80"
+        ports:
+        - containerPort: 8202
+          protocol: TCP
+ 
