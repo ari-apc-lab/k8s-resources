@@ -18,7 +18,8 @@ spec:
       - backend:
           service:
             name: cfy-manager-test
-            port: 80
+            port: 
+              number: 80
         path: /
   tls:
   - hosts:

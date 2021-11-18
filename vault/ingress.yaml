@@ -18,7 +18,8 @@ spec:
       - backend:
           service:
             name: vault
-            port: 80
+            port: 
+              number: 80
         path: /
   tls:
   - hosts:

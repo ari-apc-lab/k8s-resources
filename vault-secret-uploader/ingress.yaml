@@ -18,7 +18,8 @@ spec:
       - backend:
           service:
             name: vault-secret-uploader
-            port: 80
+            port: 
+              number: 80
         path: /
   tls:
   - hosts:

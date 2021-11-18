@@ -18,7 +18,8 @@ spec:
       - backend:
           service:
             name: keycloak
-            port: 9110
+            port: 
+              number: 9110
         path: /
   tls:
   - hosts:
