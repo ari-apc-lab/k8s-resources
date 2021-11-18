@@ -21,6 +21,7 @@ spec:
             port: 
               number: 9110
         path: /
+        pathType: Prefix
   tls:
   - hosts:
     - hpc-exporter.grapevine-project.eu
