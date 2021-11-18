@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -16,8 +16,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: hpc-exporter
-          servicePort: 9110
+          service:
+            name: hpc-exporter
+            port: 9110
         path: /
   tls:
   - hosts:

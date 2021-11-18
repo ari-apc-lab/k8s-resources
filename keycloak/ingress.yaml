@@ -16,8 +16,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: keycloak
-          servicePort: 80
+          service:
+            name: keycloak
+            port: 9110
         path: /
   tls:
   - hosts:

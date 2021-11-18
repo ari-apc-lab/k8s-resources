@@ -16,8 +16,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: cfy-manager
-          servicePort: 80
+          service:
+            name: cfy-manager
+            port: 80
         path: /
   tls:
   - hosts:

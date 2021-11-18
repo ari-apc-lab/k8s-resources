@@ -16,8 +16,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: vault-secret-uploader
-          servicePort: 80
+          service:
+            name: vault-secret-uploader
+            port: 80
         path: /
   tls:
   - hosts:
