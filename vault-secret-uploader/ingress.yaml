@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -16,9 +16,12 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: vault-secret-uploader
-          servicePort: 80
+          service:
+            name: vault-secret-uploader
+            port: 
+              number: 80
         path: /
+        pathType: Prefix
   tls:
   - hosts:
     - vault-secret-uploader.grapevine-project.eu
