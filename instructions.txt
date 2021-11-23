@@ -8,6 +8,8 @@ kubectl edit svc -n ingress-nginx ingress-nginx-controller
 #  externalIPs:
 #  - 10.0.3.11
 
+# Note: in microk8s, NGINX ingress controller is installed using microk8s addons: microk8s enable ingress
+
 #install helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
