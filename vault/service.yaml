@@ -3,6 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: vault
+  namespace: croupier-services
 spec:
   ports:
   - name: vault

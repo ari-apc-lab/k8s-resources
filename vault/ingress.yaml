@@ -10,6 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   name: vault
+  namespace: croupier-services
 spec:
   rules:
   - host: vault.grapevine-project.eu

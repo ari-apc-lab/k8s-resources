@@ -4,6 +4,7 @@ metadata:
   labels:
     app: cfy-manager-test
   name: cfy-manager-test
+  namespace: croupier-services
 spec:
   replicas: 1
   selector:
