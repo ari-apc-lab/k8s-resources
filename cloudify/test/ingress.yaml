@@ -12,7 +12,7 @@ metadata:
   name: cloudify
 spec:
   rules:
-    - host: cloudify.avalon.atos.net
+    - host: cloudify.croupier.permedcoe.eu
       http:
         paths:
         - path: /
@@ -22,3 +22,7 @@ spec:
               name: cfy-manager-test
               port: 
                 number: 80
+  tls:
+  - hosts:
+    - cloudify.croupier.permedcoe.eu
+    secretName: cloudify.croupier.permedcoe.eu
