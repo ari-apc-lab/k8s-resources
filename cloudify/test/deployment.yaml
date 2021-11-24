@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
       - name: cfy-manager
-        image: atosariapclab/croupier-grapevine:6.2.0
+        image: atosariapclab/croupier-permedcoe:latest
         imagePullPolicy: Always
         volumeMounts:
-        - mountPath: /data/grapevine-cloudify-test/
+        - mountPath: /data/permedcoe-cloudify-test/
           name: tmp-storage
         ports:
         - containerPort: 80
@@ -28,12 +28,8 @@ spec:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          postStart:
-            exec:
-              command: ["/bin/sh","-c","/scripts/poststart.sh"]
       volumes:
       - name: tmp-storage
         hostPath:
-          path: /root/grapevine-cloudify-test/tmp/
+          path: /root/permedcoe-cloudify-test/tmp/
           type: DirectoryOrCreate
