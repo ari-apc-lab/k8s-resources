@@ -13,18 +13,42 @@ spec:
         app: keycloak
     spec:
       containers:
-      - image: jboss/keycloak:13.0.1
-        name: keycloak
-        env:
-        - name: KEYCLOAK_USER
-          value: admin
-        - name: KEYCLOAK_PASSWORD
-          value: admin
+      - name: keycloak
+        image: jboss/keycloak
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1G"
+          requests:
+            cpu: "0.5"
+            memory: "512M"
+        volumeMounts:
+          - name: keycloak-realm
+            mountPath: "/home/secret/"
+            readOnly: true
         ports:
-        - containerPort: 8080
-          protocol: TCP 
-        - containerPort: 8443
-          protocol: TCP
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        env:
+          - name: KEYCLOAK_USER
+            value: admin
+          - name: KEYCLOAK_IMPORT
+            value: /home/secret/permedcoe-realm.json
+          - name: KEYCLOAK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: keycloak-admin-pw
+      volumes:
+        - name: keycloak-realm
+          secret:
+            secretName: keycloak-realm
+            items:
+              - key: permedcoe-realm.json
+                path: permedcoe-realm.json
+                mode: 0444
        
 
  
