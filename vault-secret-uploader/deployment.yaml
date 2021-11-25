@@ -18,17 +18,29 @@ spec:
         name: vault-secret-uploader
         env:
         - name: VAULT_ADMIN_TOKEN
-          value: $VAULT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: vault
+                key: root-token
         - name: VAULT_SECRET_UPLOADER_PORT
           value: "8202"
         - name: OIDC_CLIENT_ID
-          value: grapevine
+          valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: client-id
         - name: OIDC_CLIENT_SECRET
-          value: $OIDC_SECRET
+          valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: client-secret
         - name: OIDC_INTROSPECTION_ENDPOINT
-          value: http://keycloak.croupier.permedcoe.eu/auth/realms/permedcoe/protocol/openid-connect/token/introspect
+          valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: introspect-url
         - name: VAULT_ADDRESS
-          value: vault.croupier.permedcoe.eu
+          value: vault
         - name: VAULT_PORT
           value: "80"
         ports:
