@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe-services
 spec:
   rules:
-  - host: vault-secret-uploader.grapevine-project.eu
+  - host: vault-secret-uploader.croupier.permedcoe.eu
     http:
       paths:
       - backend:
@@ -25,5 +25,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - vault-secret-uploader.grapevine-project.eu
-    secretName: vault-secret-uploader.grapevine-project.eu
+    - vault-secret-uploader.croupier.permedcoe.eu
+    secretName: vault-secret-uploader.croupier.permedcoe.eu

@@ -26,9 +26,9 @@ spec:
         - name: OIDC_CLIENT_SECRET
           value: $OIDC_SECRET
         - name: OIDC_INTROSPECTION_ENDPOINT
-          value: http://keycloak.grapevine-project.eu/auth/realms/grapevine/protocol/openid-connect/token/introspect
+          value: http://keycloak.croupier.permedcoe.eu/auth/realms/permedcoe/protocol/openid-connect/token/introspect
         - name: VAULT_ADDRESS
-          value: vault.grapevine-project.eu
+          value: vault.croupier.permedcoe.eu
         - name: VAULT_PORT
           value: "80"
         ports:
