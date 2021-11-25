@@ -18,9 +18,15 @@ spec:
         name: vault
         env:
         - name: VAULT_TOKEN
-          value: $VAULT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: vault
+                key: root-token
         - name: VAULT_DEV_ROOT_TOKEN_ID
-          value: $VAULT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: vault
+                key: root_token
         - name: VAULT_LOCAL_CONFIG
           value: '{"backend": {"file": {"path": "/vault/file"}}, "default_lease_ttl": "16h", "max_lease_ttl": "72h"}'
         ports:
