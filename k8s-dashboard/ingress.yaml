@@ -1,15 +1,11 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
-    nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
-    nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
-    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: 300m
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  name: keycloak
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  name: dashboard
   namespace: kube-system
 spec:
   rules:
@@ -19,11 +15,7 @@ spec:
       - backend:
           service:
             name: kubernetes-dashboard
-            port: 
+            port:
               number: 443
         path: /
         pathType: Prefix
-  tls:
-  - hosts:
-    - k8s.croupier.permedcoe.eu
-    secretName: k8s.croupier.permedcoe.eu
