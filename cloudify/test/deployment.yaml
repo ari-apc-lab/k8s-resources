@@ -26,6 +26,7 @@ spec:
         - containerPort: 80
           protocol: TCP
         securityContext:
+          privileged: true
           capabilities:
             add:
             - SYS_ADMIN
