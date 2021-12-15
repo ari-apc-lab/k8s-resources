@@ -78,7 +78,7 @@ spec:
               name: vault
               key: secret-engines
       containers:
-      - image: sodaliteh2020/vault-secret-uploader
+      - image: atosariapclab/vault-secret-uploader
         name: vault-secret-uploader
         env:
         - name: VAULT_ADMIN_TOKEN
