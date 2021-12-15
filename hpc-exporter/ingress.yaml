@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe-services
 spec:
   rules:
-  - host: hpc-exporter.grapevine-project.eu
+  - host: hpc-exporter.croupier.permedcoe.eu
     http:
       paths:
       - backend:
@@ -25,5 +25,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - hpc-exporter.grapevine-project.eu
-    secretName: hpc-exporter.grapevine-project.eu
+    - hpc-exporter.croupier.permedcoe.eu
+    secretName: hpc-exporter.croupier.permedcoe.eu
