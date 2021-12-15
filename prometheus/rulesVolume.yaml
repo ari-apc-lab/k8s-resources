@@ -2,7 +2,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: prometheus-rules
-  namespace: sodalite-services
+  namespace: permedcoe-services
 spec:
   accessModes:
     - ReadWriteOnce

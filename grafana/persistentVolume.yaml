@@ -2,7 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: grafana
-  namespace: sodalite-services
+  namespace: permedcoe-services
 provisioner: kubernetes.io/no-provisioner
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: grafana
-  namespace: sodalite-services
+  namespace: permedcoe-services
   labels:
     app: grafana
 spec:
@@ -25,15 +25,15 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   local:
-!    path: /mnt/disks/ssd1
+    path: "/mnt/disks/ssd1"
   nodeAffinity:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-!        - key: kubernetes.io/hostname
-          operator: In
-          values:
-!          - example-node
+        - key: "kubernetes.io/hostname"
+        operator: In
+        values:
+        - example-node
 
 ---
 
@@ -41,7 +41,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana
-  namespace: sodalite-services
+  namespace: permedcoe-services
 spec:
   accessModes:
     - ReadWriteMany

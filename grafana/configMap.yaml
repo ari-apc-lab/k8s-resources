@@ -2,9 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-registry
-  namespace: sodalite-services
+  namespace: permedcoe-services
 data:
-  GF_SERVER_DOMAIN: https://grafana.sodalite.eu
+  GF_SERVER_DOMAIN: https://grafana.croupier.permedcoe.eu
   GF_USERS_ALLOW_SIGN_UP: false
   GF_USERS_DISABLE_LOGIN_FORM: true
   GF_USERS_OAUTH_AUTO_LOGIN: true
@@ -14,7 +14,7 @@ data:
   GF_GENERIC_OAUTH_NAME: Keycloak
   GF_GENERIC_OAUTH_SCOPES: profile
 
-  datasources: |
+  datasources: |2+
     datasources:
     - name: 'Prometheus'
       type: 'prometheus'
@@ -23,8 +23,8 @@ data:
       is_default: true
       editable: false
 
-  dashboards: |
-    - name: 'Sodalite'
+  dashboards: |2+
+    - name: 'Permedcoe'
       org_id: 1
       folder: ''
       type: 'file'
