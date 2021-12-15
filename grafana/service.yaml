@@ -3,7 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: grafana
-  namespace: sodalite-services
+  namespace: permedcoe-services
 spec:
   ports:
   - name: grafana
