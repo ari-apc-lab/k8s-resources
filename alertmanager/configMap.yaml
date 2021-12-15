@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: alertmanager
-  namespace: sodalite-services
+  namespace: permedcoe-services
   labels:
     app: alertmanager
 data:

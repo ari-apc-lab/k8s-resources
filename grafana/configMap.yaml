@@ -14,7 +14,7 @@ data:
   GF_GENERIC_OAUTH_NAME: Keycloak
   GF_GENERIC_OAUTH_SCOPES: profile
 
-  datasources: |
+  datasources: |2+
     datasources:
     - name: 'Prometheus'
       type: 'prometheus'
@@ -23,8 +23,8 @@ data:
       is_default: true
       editable: false
 
-  dashboards: |
-    - name: 'Sodalite'
+  dashboards: |2+
+    - name: 'Permedcoe'
       org_id: 1
       folder: ''
       type: 'file'

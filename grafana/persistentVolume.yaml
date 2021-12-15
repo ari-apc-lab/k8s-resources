@@ -25,15 +25,15 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   local:
-!    path: /mnt/disks/ssd1
+    path: "/mnt/disks/ssd1"
   nodeAffinity:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-!        - key: kubernetes.io/hostname
-          operator: In
-          values:
-!          - example-node
+        - key: "kubernetes.io/hostname"
+        operator: In
+        values:
+        - example-node
 
 ---
 
