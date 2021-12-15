@@ -9,21 +9,21 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  name: cloudify-api-test
-  namespace: croupier-services
+  name: cloudify
+  namespace: permedcoe-services
 spec:
   rules:
-  - host: cloudify-test.grapevine-project.eu
-    http:
-      paths:
-      - backend:
-          service:
-            name: cfy-manager-test
-            port: 
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: cloudify.croupier.permedcoe.eu
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: cfy-manager-test
+              port: 
+                number: 80
   tls:
   - hosts:
-    - cloudify-test.grapevine-project.eu
-    secretName: cloudify-test.grapevine-project.eu
+    - cloudify.croupier.permedcoe.eu
+    secretName: cloudify.croupier.permedcoe.eu

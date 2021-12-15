@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vault-secret-uploader
-  namespace: croupier-services
+  namespace: permedcoe-services
 spec:
   selector:
     matchLabels:
@@ -83,32 +83,34 @@ spec:
         env:
         - name: VAULT_ADMIN_TOKEN
           valueFrom:
-              secretKeyRef:
-                name: vault
-                key: root-token
+            secretKeyRef:
+              name: vault
+              key: root-token
         - name: VAULT_SECRET_UPLOADER_PORT
           value: "8202"
         - name: OIDC_CLIENT_ID
           valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: client-id
+            secretKeyRef:
+              name: keycloak
+              key: client-id
         - name: OIDC_CLIENT_SECRET
           valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: client-secret
+            secretKeyRef:
+              name: keycloak
+              key: client-secret
         - name: OIDC_INTROSPECTION_ENDPOINT
           valueFrom:
-              secretKeyRef:
-                name: keycloak
-                key: introspect-url
+            secretKeyRef:
+              name: keycloak
+              key: introspect-url
         - name: VAULT_ADDRESS
-          secretKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: vault
               key: vault-host
         - name: VAULT_PORT
-          secretKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: vault
               key: vault-port
         ports:

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: keycloak
-  namespace: croupier-services
+  namespace: permedcoe-services
 spec:
   ports:
   - name: keycloak

@@ -10,20 +10,20 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   name: keycloak
-  namespace: croupier-services
+  namespace: permedcoe-services
 spec:
   rules:
-  - host: keycloak.grapevine-project.eu
+  - host: keycloak.croupier.permedcoe.eu
     http:
       paths:
-      - backend:
+      - path: /
+        pathType: Prefix
+        backend:
           service:
             name: keycloak
             port: 
-              number: 9110
-        path: /
-        pathType: Prefix
+              number: 80
   tls:
   - hosts:
-    - keycloak.grapevine-project.eu
-    secretName: keycloak.grapevine-project.eu
+    - keycloak.croupier.permedcoe.eu
+    secretName: keycloak.croupier.permedcoe.eu

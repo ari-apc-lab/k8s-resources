@@ -10,10 +10,10 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   name: vault
-  namespace: croupier-services
+  namespace: permedcoe-services
 spec:
   rules:
-  - host: vault.grapevine-project.eu
+  - host: vault.croupier.permedcoe.eu
     http:
       paths:
       - backend:
@@ -25,5 +25,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - vault.grapevine-project.eu
-    secretName: vault.grapevine-project.eu
+    - vault.croupier.permedcoe.eu
+    secretName: vault.croupier.permedcoe.eu

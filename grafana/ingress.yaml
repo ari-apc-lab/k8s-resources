@@ -9,21 +9,21 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  name: vault-secret-uploader
+  name: grafana
   namespace: permedcoe-services
 spec:
   rules:
-  - host: vault-secret-uploader.croupier.permedcoe.eu
+  - host: grafana.croupier.permedcoe.eu
     http:
       paths:
-      - backend:
+      - path: /
+        pathType: Prefix
+        backend:
           service:
-            name: vault-secret-uploader
+            name: grafana
             port: 
               number: 80
-        path: /
-        pathType: Prefix
   tls:
   - hosts:
-    - vault-secret-uploader.croupier.permedcoe.eu
-    secretName: vault-secret-uploader.croupier.permedcoe.eu
+    - grafana.croupier.permedcoe.eu
+    secretName: grafana.croupier.permedcoe.eu

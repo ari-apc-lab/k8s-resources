@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keycloak
-  namespace: croupier-services
+  namespace: permedcoe-services
 spec:
   selector:
     matchLabels:
@@ -36,7 +36,7 @@ spec:
           - name: KEYCLOAK_USER
             value: admin
           - name: KEYCLOAK_IMPORT
-            value: /home/secret/sodalite-realm.json
+            value: /home/secret/permedcoe-realm.json
           - name: KEYCLOAK_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -47,8 +47,8 @@ spec:
           secret:
             secretName: keycloak-realm
             items:
-              - key: sodalite-realm.json
-                path: sodalite-realm.json
+              - key: permedcoe-realm.json
+                path: permedcoe-realm.json
                 mode: 0444
        
 
