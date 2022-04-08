@@ -25,7 +25,7 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: "/mnt/disks/ssd1"
+    path: "/mnt/k8s-volumes/grafana"
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -33,7 +33,7 @@ spec:
         - key: "kubernetes.io/hostname"
           operator: In
           values:
-          - example-node
+          - apclserver #TODO check for cluster
 
 ---
 

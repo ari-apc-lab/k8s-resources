@@ -18,16 +18,16 @@ spec:
         fsGroup: 65534
       containers:
       - image: prom/prometheus:v2.23.0
-        args: [--web.enable-lifecycle] 
+        args: [--web.enable-lifecycle,--config.file=/etc/prometheus/prometheus.yml]
         name: prometheus
         ports:
         - containerPort: 9090
           protocol: TCP
         volumeMounts:
         - name: prometheus-config
-          mountPath: /etc/prometheus
+          mountPath: /etc/prometheus/
         - name: prometheus-storage
-          mountPath: /prometheus
+          mountPath: /prometheus/
         - name: prometheus-rules
           mountPath: /etc/prometheus/rules/
           subPath: rules
