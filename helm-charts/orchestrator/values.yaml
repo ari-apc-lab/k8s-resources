@@ -1,0 +1,12 @@
+# Default values for orchestrator umbrella chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # Components' domain name. If omitted, "exampledomain.eu"
+  # is used for testing porpuses.
+  projectDomain: ""
+  tls:
+    enabled: false
+
+nameOverride: ""
