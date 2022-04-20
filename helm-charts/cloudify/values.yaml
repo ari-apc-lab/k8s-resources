@@ -3,9 +3,9 @@
 # Declare variables to be passed into templates.
 
 global:
-  # Cloudify's domain name is a parameter intended to be set 
+  # Cloudify's domain name is a parameter intended to be set
   # from the "orchestrator" umbrella chart.
-  # If omitted, "exampledomain.eu" is used for testing porpuses. 
+  # If omitted, "exampledomain.eu" is used for testing porpuses.
   projectDomain: ""
   tls:
     enabled: false
@@ -91,5 +91,7 @@ ingress:
           pathType: Prefix
   tls:
     - secretName: tls-secret-example
+      # This assumes tls-secret exists and the SSL
+      # certificate contains a CN for cloudify.<projectdomain.eu>
       hostSubdomains:
         - cloudify

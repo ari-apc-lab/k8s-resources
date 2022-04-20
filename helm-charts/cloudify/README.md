@@ -13,14 +13,14 @@ It's a Helm chart for Cloudify manager (based on https://github.com/cloudify-cos
 This chart is intended to be installed as a dependency of the `orchestrator` umbrella chart.
 However, for local testing it can be deployed/upgraded by running:
 
-    helm upgrade --install cloudify-manager-aio ./cloudify -n orchestrator --create-namespace
+    helm upgrade --install cloudify-manager-aio . -n orchestrator --create-namespace
 
 ### Notes:
 - Cloudify's default domain name `exampledomain.eu` is used for testing purposes.
   It can be modified by adding `--set global.projectDomain=<yourdomain.eu>` to 
   the previous installation command.
 - Cloudify's default password can be replaced during installation by adding
-   `--set config.password=<yourPassword>`.
-   If omitted, `testPassword!1` is used as new password for Cloudify.
+  `--set config.password=<yourPassword>`.
+  If omitted, `testPassword!1` is used as new password for Cloudify.
 
 Please check out [values.yaml](./values.yaml) for more configuration details.
