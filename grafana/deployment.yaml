@@ -13,6 +13,10 @@ spec:
       labels:
         app: grafana
     spec:
+      hostAliases:
+      - ip: 10.152.183.157
+        hostnames:
+        - keycloak.croupier.permedcoe.eu
       containers:
       - image: grafana/grafana:7.3.7
         name: grafana
