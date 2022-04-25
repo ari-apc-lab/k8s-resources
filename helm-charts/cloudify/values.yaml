@@ -40,12 +40,10 @@ readinessProbe:
 
 config:
   # Cloudify's new password can be set during installation using
-  # postStart.enabled=true and "--set config.password=yourPassword".
-  # If the latter is omitted, "testPassword!1" is used as new 
-  # password for Cloudify.
+  # postStart.enabled=true ("cloudify" secret is required, check
+  # README.md out)
   postStart:
     enabled: true
-  password: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
