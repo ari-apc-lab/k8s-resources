@@ -18,6 +18,10 @@ Follow these steps:
 
     kubectl create ns orchestrator
 
+    kubectl create secret generic cloudify \
+      -n orchestrator \
+      --from-literal=cloudify-admin-pw='<adminPassword>'
+
     kubectl create secret generic keycloak \
       -n orchestrator \
       --from-literal=keycloak-admin=<adminId> \
