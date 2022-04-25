@@ -8,13 +8,33 @@ the following charts/components:
 | Chart                                | Component              |
 |--------------------------------------|------------------------|
 | [cloudify](../cloudify/README.md)    | Cloudify manager AIO   |
+| [keycloak](../keycloak/README.md)    | Keycloak               |
 
 
 ## Installation
 
-This chart is intended to be installed as a whole to deploy all the components related to the Orchestrator:
+This chart is intended to be installed as a whole to deploy all the components related to the Orchestrator.
+Follow these steps:
 
-    helm install orchestrator . -n orchestrator --create-namespace
+    kubectl create ns orchestrator
+
+    kubectl create secret generic keycloak \
+      -n orchestrator \
+      --from-literal=keycloak-admin=<adminId> \
+      --from-literal=keycloak-admin-pw='<adminPassword>'
+
+It is possible to check whether the secret was created properly by running:
+
+    kubectl get secrets -n orchestrator keycloak -o jsonpath='{.data.keycloak-admin}' | base64 --decode
+    kubectl get secrets -n orchestrator keycloak -o jsonpath='{.data.keycloak-admin-pw}' | base64 --decode
+
+Update dependencies:
+
+    helm dependency update .
+
+Finally, deploy Orchestrator's chart:
+
+    helm install orchestrator . -n orchestrator
 
 ### Optional installation attributes:
 
