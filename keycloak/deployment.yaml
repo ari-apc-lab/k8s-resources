@@ -13,6 +13,10 @@ spec:
       labels:
         app: keycloak
     spec:
+      hostAliases:
+      - ip: 10.152.183.42
+        hostnames:
+        - grafana.croupier.permedcoe.eu      
       containers:
       - name: keycloak
         image: jboss/keycloak

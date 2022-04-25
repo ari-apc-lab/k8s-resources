@@ -5,15 +5,15 @@ metadata:
   namespace: permedcoe-services
 data:
   GF_SERVER_DOMAIN: grafana.croupier.permedcoe.eu
-  GF_SERVER_URL: https://grafana.croupier.permedcoe.eu
+  GF_SERVER_URL: http://grafana.croupier.permedcoe.eu
   GF_USERS_ALLOW_SIGN_UP: "false"
   GF_USERS_DISABLE_LOGIN_FORM: "true"
   GF_USERS_OAUTH_AUTO_LOGIN: "true"
   GF_USERS_SIGNOUT_REDIRECT_URL: ""
-  GF_GENERIC_OAUTH_ENABLED: "true"
-  GF_GENERIC_OAUTH_ALLOW_SIGN_UP: "true"
-  GF_GENERIC_OAUTH_NAME: Keycloak
-  GF_GENERIC_OAUTH_SCOPES: profile
+  GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+  GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: "true"
+  GF_AUTH_GENERIC_OAUTH_NAME: Keycloak
+  GF_AUTH_GENERIC_OAUTH_SCOPES: profile
 
   datasources: |2+
     datasources:
