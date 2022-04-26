@@ -13,6 +13,10 @@ spec:
       labels:
         app: grafana-registry
     spec:
+      hostAliases:
+      - ip: 10.152.183.157
+        hostnames:
+        - keycloak.croupier.permedcoe.eu            
       containers:
       - image: sodaliteh2020/grafana-registry
         name: grafana-registry

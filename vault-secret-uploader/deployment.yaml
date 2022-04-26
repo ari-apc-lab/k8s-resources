@@ -13,6 +13,10 @@ spec:
       labels:
         app: vault-secret-uploader
     spec:
+      hostAliases:
+      - ip: 10.152.183.157
+        hostnames:
+        - keycloak.croupier.permedcoe.eu            
       containers:
       - image: atosariapclab/vault-secret-uploader
         name: vault-secret-uploader

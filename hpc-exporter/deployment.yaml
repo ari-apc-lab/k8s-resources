@@ -13,6 +13,10 @@ spec:
       labels:
         app: hpc-exporter
     spec:
+      hostAliases:
+      - ip: 10.152.183.157
+        hostnames:
+        - keycloak.croupier.permedcoe.eu            
       containers:
       - image: atosariapclab/hpc-exporter-nojwt
         name: hpc-exporter
