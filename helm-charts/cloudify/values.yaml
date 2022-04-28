@@ -3,9 +3,9 @@
 # Declare variables to be passed into templates.
 
 global:
-  # Cloudify's domain name is a parameter intended to be set
-  # from the "orchestrator" umbrella chart.
-  # If omitted, "exampledomain.eu" is used for testing porpuses.
+  # The domain name assigned to the project is a parameter intended
+  # to be set from the "orchestrator" umbrella chart.
+  # If omitted, "exampledomain.eu" is used for testing porposes.
   projectDomain: ""
   tls:
     enabled: false
