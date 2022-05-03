@@ -9,6 +9,13 @@ global:
   projectDomain: ""
   tls:
     enabled: false
+  config:
+    # Keycloak's realm and client names used if jobConfig.enabled
+    # is set to "true".
+    # If omitted, "exampleRealm" and "exampleClient" are used for
+    # testing porposes
+    keycloakRealm: ""
+    keycloakClient: ""
 
 nameOverride: ""
 fullnameOverride: ""
@@ -19,6 +26,11 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
+
+jobImage:
+  repository: "alpine"
+  pullPolicy: IfNotPresent
+  tag: "3.15.4"
 
 podAnnotations: {}
 
@@ -36,6 +48,14 @@ readinessProbe:
   enabled: true
   initialDelaySeconds: 8
   path: /realms/master
+
+jobConfig:
+  # Keycloak's realm and client can be set during installation using
+  # jobConfig.enabled=true. Realm and client names are set by
+  # global.config.keycloakRealm and global.config.keycloakClient.
+  enabled: true
+  backoffLimit: 8
+  restartPolicy: OnFailure
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
