@@ -1,4 +1,4 @@
-{{- $keycloakRealm := default "example" .Values.global.config.keycloakRealm -}}
+{{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,14 +40,14 @@ spec:
           - name: VAULT_SECRET_UPLOADER_PORT
             value: {{ .Values.service.targetPort | quote }}
           - name: OIDC_CLIENT_ID
-            value: {{ default "example" .Values.global.config.keycloakClient | quote }}
+            value: {{ default "exampleClient" .Values.global.config.keycloakClient | quote }}
           - name: OIDC_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
                 name: keycloak-postinstall
                 key: client-secret
           - name: OIDC_INTROSPECTION_ENDPOINT
-            value: "http://keycloak/auth/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
+            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
           - name: VAULT_ADDRESS
             value: "vault"
           - name: VAULT_PORT

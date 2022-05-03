@@ -10,8 +10,8 @@ global:
   tls:
     enabled: false
   config:
-    keycloakClient: ""
     keycloakRealm: ""
+    keycloakClient: ""
 
 nameOverride: ""
 fullnameOverride: ""
