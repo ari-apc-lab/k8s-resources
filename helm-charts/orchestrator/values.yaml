@@ -3,10 +3,29 @@
 # Declare variables to be passed into your templates.
 
 global:
-  # Components' domain name. If omitted, "exampledomain.eu"
-  # is used for testing porpuses.
+  # Domain assigned to the project. If omitted,
+  # "exampledomain.eu" is used for testing porposes.
   projectDomain: ""
   tls:
+    # enable TLS/HTTPS (termination at the Ingress level).
     enabled: false
+  config:
+    # Keycloak's realm and client names to be configured.
+    # If omitted, "exampleRealm" and "exampleClient" are used for
+    # testing porposes.
+    keycloakRealm: ""
+    keycloakClient: ""
 
 nameOverride: ""
+
+cloudify:
+  fullnameOverride: "cloudify"
+
+keycloak:
+  fullnameOverride: "keycloak"
+
+vault:
+  fullnameOverride: "vault"
+
+vault-secret-uploader:
+  fullnameOverride: "vault-secret-uploader"
