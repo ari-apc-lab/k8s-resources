@@ -4,7 +4,7 @@ metadata:
   name: grafana
   namespace: permedcoe-services
 data:
-  GF_SERVER_DOMAIN: grafana.croupier.permedcoe.eu
+  GF_SERVER_DOMAIN: grafana
   GF_SERVER_URL: http://grafana.croupier.permedcoe.eu
   GF_USERS_ALLOW_SIGN_UP: "false"
   GF_USERS_DISABLE_LOGIN_FORM: "true"
@@ -20,7 +20,7 @@ data:
     - name: 'Prometheus'
       type: 'prometheus'
       access: 'browser'
-      url: 'http://prometheus:9090'
+      url: 'http://prometheus:80'
       is_default: true
       editable: false
 

@@ -17,9 +17,6 @@ spec:
       - ip: 10.152.183.157
         hostnames:
         - keycloak.croupier.permedcoe.eu            
-      - ip: 10.152.183.42
-        hostnames:
-        - grafana.croupier.permedcoe.eu
       containers:
       - image: sodaliteh2020/grafana-registry
         name: grafana-registry
@@ -56,7 +53,7 @@ spec:
         - name: PROMETHEUS_ADDRESS
           value: prometheus
         - name: PROMETHEUS_PORT
-          value: "9090"
+          value: "80"
         - name: GF_ADDRESS
           valueFrom:
             configMapKeyRef:
