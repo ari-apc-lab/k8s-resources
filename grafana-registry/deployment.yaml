@@ -17,6 +17,9 @@ spec:
       - ip: 10.152.183.157
         hostnames:
         - keycloak.croupier.permedcoe.eu            
+      - ip: 10.152.183.42
+        hostnames:
+        - grafana.croupier.permedcoe.eu
       containers:
       - image: sodaliteh2020/grafana-registry
         name: grafana-registry
