@@ -46,7 +46,7 @@ spec:
             httpGet:
               path: {{ .Values.readinessProbe.path }}
               port: {{ .Values.service.targetPort }}
-          {{- end}}
+          {{- end }}
           {{- if .Values.config.postStart.enabled }}
           env:
           - name: CLOUDIFY_ADMIN_PASSWORD
@@ -61,11 +61,11 @@ spec:
                   - sh
                   - "-c"
                   - "/bin/bash /scripts/poststart.sh ${CLOUDIFY_ADMIN_PASSWORD}"
-          {{- end}}
+          {{- end }}
           {{- if .Values.resources }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- end}}
+          {{- end }}
       volumes:
         - name: scripts-vol
           configMap:
