@@ -7,7 +7,7 @@
 global:
   projectDomain: "grapevine-project.eu"
   tls:
-    enabled: false
+    enabled: true
   config:
     keycloakRealm: "orchestrator"
     keycloakClient: "grapevine"

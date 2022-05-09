@@ -14,6 +14,72 @@ as it contains the following charts/components:
 
 ## Installation
 
+### Requirements
+
+- NGINX Ingress:
+
+  If not installed, install the NGINX Ingress Controller in your Kubernetes cluster.
+
+  **Note**: this is cluster-wide (the Ingress Controller requires a number of custom
+  resource definitions (CRDs) installed in the cluster), so make sure you do not
+  overwrite existing installation.
+
+  Detailed information about installation using Helm can be found
+  [here](https://github.com/nginxinc/kubernetes-ingress/tree/main/deployments/helm-chart#nginx-ingress-controller-helm-chart).
+
+- Cert-manager:
+
+  If you want to use TLS/HTTPS (termination at the Ingress level),
+  configure Nginx to use production ready TLS certificates
+  via [cert-Manager](https://cert-manager.io/).
+  This is a Kubernetes addon to automate the management and issuance of TLS
+  certificates from various issuing sources.
+  It will ensure certificates are valid and up to date periodically, and
+  attempt to renew certificates at an appropriate time before expiry.
+
+  **Note**: this is cluster-wide (cert-manager requires a number of custom
+  resource definitions (CRDs) installed in the cluster), so make sure you
+  do not overwrite existing installation.
+
+  Detailed information:
+  - https://cert-manager.io/docs/usage/ingress/
+  - https://www.digitalocean.com/community/tech_talks/securing-your-kubernetes-ingress-with-lets-encrypt
+  - https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/03-setup-ingress-controller/nginx.md#step-5---configuring-production-ready-tls-certificates-for-nginx
+  - https://artifacthub.io/packages/helm/cert-manager/cert-manager
+
+  To install cert-manager using Helm (release name `cert-manager`), run:
+
+  ```sh
+  # Add the Jetstack Helm repository
+  helm repo add jetstack https://charts.jetstack.io
+
+  # Install the cert-manager helm chart
+  helm install cert-manager jetstack/cert-manager --version v1.8.0 \
+      --namespace cert-manager \
+      --create-namespace \
+      --set installCRDs=true \
+      --set prometheus.enabled=false
+  ```
+
+  To inspect Kubernetes resources created:
+
+  ```sh
+  kubectl get all -n cert-manager
+  kubectl get crd -l app.kubernetes.io/name=cert-manager
+  ```
+
+  To uninstall/delete the cert-manager deployment:
+
+  ```sh
+  helm uninstall -n cert-manager cert-manager
+  ```
+
+  The previous command removes all the Kubernetes components associated
+  with the chart (CRDs) and deletes the release.
+
+
+### Orchestrator chart
+
 This chart is intended to be installed as a whole to deploy all the components related to the Orchestrator.
 Follow these steps:
 
