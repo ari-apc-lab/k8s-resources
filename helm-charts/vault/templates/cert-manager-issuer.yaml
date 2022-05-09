@@ -1,0 +1,22 @@
+{{- if .Values.global.tls.enabled -}}
+# Based on https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/03-setup-ingress-controller/assets/manifests/nginx/cert-manager-issuer.yaml
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "vault.fullname" . }}
+  labels:
+  {{- include "vault.labels" . | nindent 4 }}
+spec:
+  acme:
+    email: {{ default "ari-aida-tech@lists.atos.research.eu" .Values.global.tls.acmeEmail }}
+    server: {{ default "https://acme-v02.api.letsencrypt.org/directory" .Values.global.tls.acmeServer }}
+    privateKeySecretRef:
+      # Kubernetes Secret to store the automatically generated
+      # ACME account private key
+      name: {{ include "vault.fullname" . }}-nginx-private-key
+    solvers:
+      # Use the HTTP-01 challenge provider
+      - http01:
+          ingress:
+            class: nginx
+{{- end }}

@@ -11,6 +11,9 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if .Values.global.tls.enabled }}
+    cert-manager.io/issuer: {{ $fullName }}
+  {{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
@@ -23,7 +26,7 @@ spec:
         {{- range .hostSubdomains }}
         - {{ printf "%s.%s" . $projectDomain | quote }}
         {{- end }}
-      secretName: {{ .secretName }}
+      secretName: {{ $fullName }}-tls-cert
     {{- end }}
   {{- end }}
   rules:
