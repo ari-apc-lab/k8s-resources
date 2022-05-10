@@ -14,7 +14,7 @@ global:
     # If omitted, "ari-aida-tech@lists.atos.research.eu" is used.
     acmeEmail: ""
     # The URL used to access the ACME server’s directory endpoint.
-    # If omitted, "https://acme-v02.api.letsencrypt.org/directory" is used.
+    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory" is used.
     acmeServer: ""
   config:
     keycloakRealm: ""

@@ -9,7 +9,7 @@ metadata:
 spec:
   acme:
     email: {{ default "ari-aida-tech@lists.atos.research.eu" .Values.global.tls.acmeEmail }}
-    server: {{ default "https://acme-v02.api.letsencrypt.org/directory" .Values.global.tls.acmeServer }}
+    server: {{ default "https://acme-staging-v02.api.letsencrypt.org/directory" .Values.global.tls.acmeServer }}
     privateKeySecretRef:
       # Kubernetes Secret to store the automatically generated
       # ACME account private key
