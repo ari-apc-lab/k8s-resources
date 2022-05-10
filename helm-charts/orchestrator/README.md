@@ -168,7 +168,7 @@ Follow these steps:
   - Create client `<exampleClient>`.
     - Settings:
       - Access_type: confidential
-      - Implicit flow enable: true
+      - Implicit flow enabled: true
       - Valid redirect URIs: *
 - Create users and set their passwords.
 - Then get the "Client secret" from Keycloak and create the required K8s secret:

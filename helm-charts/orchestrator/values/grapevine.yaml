@@ -8,6 +8,7 @@ global:
   projectDomain: "grapevine-project.eu"
   tls:
     enabled: true
+    acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
   config:
     keycloakRealm: "orchestrator"
     keycloakClient: "grapevine"
