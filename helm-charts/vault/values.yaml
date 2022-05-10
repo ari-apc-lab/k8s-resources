@@ -40,9 +40,9 @@ securityContext: {}
   # runAsUser: 1000
 
 readinessProbe:
-  enabled: false
+  enabled: true
   initialDelaySeconds: 8
-  path: / # TODO
+  path: /ui/
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
