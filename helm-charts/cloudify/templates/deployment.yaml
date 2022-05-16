@@ -47,7 +47,7 @@ spec:
               path: {{ .Values.readinessProbe.path }}
               port: {{ .Values.service.targetPort }}
           {{- end }}
-          {{- if .Values.config.postStart.enabled }}
+          {{- if and .Values.config.postStart.enabled .Release.IsInstall }}
           env:
           - name: CLOUDIFY_ADMIN_PASSWORD
             valueFrom:
