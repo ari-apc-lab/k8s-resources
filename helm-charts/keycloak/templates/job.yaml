@@ -55,4 +55,4 @@ spec:
         - name: config-vol
           configMap:
             name: {{ include "keycloak.fullname" . }}
-{{- end}}
+{{- end }}

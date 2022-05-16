@@ -1,4 +1,4 @@
-
+{{- if and .Values.jobConfig.enabled .Release.IsInstall }}
 {{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
 {{- $keycloakClient := default "exampleClient" .Values.global.config.keycloakClient -}}
 apiVersion: v1
@@ -2203,3 +2203,4 @@ data:
         "policies": []
       }
     }
+{{- end }}
