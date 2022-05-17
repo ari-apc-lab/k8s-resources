@@ -1,6 +1,9 @@
 # Default values for orchestrator umbrella chart.
 # This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Important: this file is not intended to be customized for different
+#            deployments/projects. Instead, add project-specific
+#            configuration values (<project>.yaml) under./values/ and
+#            use "-f ./values/<project>.yaml" option to apply them.
 
 global:
   # Domain assigned to the project. If omitted,
@@ -14,7 +17,13 @@ global:
     # If omitted, "ari-aida-tech@lists.atos.research.eu" is used.
     acmeEmail: ""
     # The URL used to access the ACME server’s directory endpoint.
-    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory" is used.
+    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory"
+    # is used. This endpoint will not generate actual certificates. For fully
+    # working certificates "https://acme-v02.api.letsencrypt.org/directory"
+    # must be used instead. Do not use production endpoint for testing
+    # as Let's Encrypt has limited rates for issuing certificates for certain
+    # domain-IP pairs. If the limit is reached, certificate generation will
+    # stop working for a few days.
     acmeServer: ""
   config:
     # Keycloak's realm and client names to be configured.

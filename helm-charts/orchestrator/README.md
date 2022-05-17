@@ -156,9 +156,50 @@ Follow these steps:
   - chart deployment will be finished once the status of `keycloak-configjob` job
     becomes "Completed".
 
+
+### Cloudify configuration:
+
+- Once the `orchestrator` deployment is complete Cloudify's web console/interface will be accesible at
+  `http[s]://cloudify.<exampledomain.eu>`.
+  - Log in using "Username" `admin` and Cloudify's password (added to `cloudify` secret created above).
+
+- Build [`croupier`](https://github.com/ari-apc-lab/croupier), a plugin for HPC and batch jobs orchestration in Cloudify:
+
+  - Clone `croupier` repository into your local and checkout the branch you want to deploy:
+
+    ```sh
+    git clone https://github.com/ari-apc-lab/croupier.git
+    cd croupier
+    git checkout <master_dev>
+    ```
+
+  - Create `croupier` Python wagon issuing the following command:
+
+    ```sh
+    docker run -v <absolute_path_to_croupier_folder>:/packaging cloudifyplatform/cloudify-centos-7-py3-wagon-builder
+    ```
+
+    Output:
+
+    ```
+    Wagon created successfully at: ./croupier-3.2.0-centos-Core-py36-none-linux_x86_64.wgn
+    ```
+
+- Once the wagon is created, go to "Resources" > "Plugins" > "Upload" > "Upload a package":
+
+  <img src="./images/cloudify-package.png" alt="Upload a package" title="Upload a package" width="650" />
+
+- Browse your system and fetch the created wagon and `plugin.yaml` (it belongs to `croupier/` repository):
+
+  <img src="./images/cloudify-upload.png" alt="Upload a package" title="Upload a package" width="450" />
+
+- After a few seconds `croupier` will be installed:
+
+  <img src="./images/cloudify-installed.png" alt="Croupier is installed" title="Croupier is installed" width="650" />
+
 ### Keycloak configuration:
 
-- Once the deployment is complete Keycloak's web console/interface will be accesible at
+- Keycloak's web console/interface will be accesible at
   `http[s]://keycloak.<exampledomain.eu>`.
   - Log in using Keycloak's credentials (added to `keycloak` secret created above).
 - Keycloak's required realm and client are automatically configured during Orchestrator
@@ -192,7 +233,7 @@ Follow these steps:
 
 ### Vault configuration:
 
-- Vault web console/interface will be accesible at `http[s]://vault.<exampledomain.eu>`.
+- Vault's web console/interface will be accesible at `http[s]://vault.<exampledomain.eu>`.
   - Log in using "Method: Token" and Vault's token (added to `vault` secret created above).
 - Add an authentication method:
   - Go to "Access" > "Authentication Methods" > "Enable new method":
