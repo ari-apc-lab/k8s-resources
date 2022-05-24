@@ -1,4 +1,4 @@
-{{- if .Values.global.tls.enabled -}}
+{{- if and .Values.ingress.enabled .Values.global.tls.enabled -}}
 # Based on https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/03-setup-ingress-controller/assets/manifests/nginx/cert-manager-issuer.yaml
 apiVersion: cert-manager.io/v1
 kind: Issuer
