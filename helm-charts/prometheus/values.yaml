@@ -1,0 +1,126 @@
+# Default values for prometheus chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into templates.
+
+global:
+  # The domain name assigned to the project is a parameter intended
+  # to be set from the "orchestrator" umbrella chart.
+  # If omitted, "exampledomain.eu" is used for testing porposes.
+  projectDomain: ""
+  tls:
+    enabled: false
+    # The email address to be associated with the ACME account
+    # (make sure it's a valid one).
+    # If omitted, "ari-aida-tech@lists.atos.research.eu" is used.
+    acmeEmail: ""
+    # The URL used to access the ACME server’s directory endpoint.
+    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory" is used.
+    acmeServer: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+image:
+  repository: "prom/prometheus"
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 65534
+
+securityContext:
+  # Community chart configuration
+  # fsGroup: 65534
+  # runAsGroup: 65534
+  # runAsNonRoot: true
+  # runAsUser: 65534
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  path: /-/ready
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  path: /-/healthy
+
+config:
+  storage:
+    rules: "1Gi"
+    storage: "10Gi"
+
+  prometheusYml:
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    alerting:
+      alertmanagers:
+        - static_configs:
+          - targets:
+            - alertmanager:9093
+
+    rule_files:
+      - /etc/prometheus/rules/*
+
+    scrape_configs:
+      - job_name: 'prometheus'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['localhost:9090']
+
+      - job_name: 'hpc-exporter'
+        scrape_interval: 5s
+        static_configs:
+          - targets: ['hpc-exporter']
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9090
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
+    nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - hostSubdomain: prometheus
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hostSubdomains:
+        - prometheus
