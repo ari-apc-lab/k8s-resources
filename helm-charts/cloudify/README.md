@@ -23,7 +23,7 @@ However, for local testing it can be deployed/upgraded by running:
 
 ### Notes:
 - Cloudify's default domain name `exampledomain.eu` is used for testing purposes.
-  It can be modified by adding `--set global.projectDomain=<yourdomain.eu>` to 
+  It can be modified by adding `--set global.projectDomain=<yourdomain.eu>` to
   the previous installation command.
 - Cloudify's default password is replaced during installation using `cloudify` secret.
   This can be disabled by adding `--set config.postStart.enabled=false`.

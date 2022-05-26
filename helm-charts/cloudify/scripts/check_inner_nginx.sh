@@ -2,9 +2,9 @@
 
 # Rationale:
 #
-# The configure_cloudify.sh script returns the following error 
+# The configure_cloudify.sh script returns the following error
 #   "ProcessExecutionError: Failed running command: ['sudo', 'supervisorctl', '-c', '/etc/supervisord.conf', 'update', 'nginx']"
-# after running the this command 
+# after running the this command
 #   "cfy_manager configure --private-ip $ip --public-ip $ip --clean-db -a $password"
 # if it is executed too soon (after Cloudify's deployment).
 # So, this script adds a step to check if the inner instance of nginx is
