@@ -44,9 +44,11 @@ spec:
               mountPath: /etc/prometheus/
             - name: {{ include "prometheus.fullname" . }}-storage
               mountPath: /prometheus/
+            {{- if .Values.config.alerting.enabled }}
             - name: {{ include "prometheus.fullname" . }}-rules
               mountPath: /etc/prometheus/rules/
               subPath: rules
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
@@ -86,10 +88,12 @@ spec:
             items:
               - key: prometheus.yml
                 path: prometheus.yml
+        {{- if .Values.config.alerting.enabled }}
         - name: {{ include "prometheus.fullname" . }}-rules
           persistentVolumeClaim:
             claimName: {{ include "prometheus.fullname" . }}-rules
             readOnly: true
+        {{- end }}
   volumeClaimTemplates:
     - metadata:
         name: {{ include "prometheus.fullname" . }}-storage
