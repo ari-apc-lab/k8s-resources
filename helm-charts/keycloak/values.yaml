@@ -61,7 +61,7 @@ jobConfig:
   # jobConfig.enabled=true. Realm and client names are set by
   # global.config.keycloakRealm and global.config.keycloakClient.
   enabled: true
-  backoffLimit: 8
+  backoffLimit: 10
   restartPolicy: OnFailure
 
 resources:
