@@ -5,12 +5,16 @@
 It's a so called "umbrella" [Helm](https://helm.sh/) chart for the Orchestrator
 as it contains the following charts/components:
 
-| Chart                                | Component              |
-|--------------------------------------|------------------------|
-| [cloudify](../cloudify/README.md)    | Cloudify manager AIO   |
-| [keycloak](../keycloak/README.md)    | Keycloak               |
-| [vault](../vault/README.md)          | Vault                  |
-| [vault-secret-uploader](../vault-secret-uploader/README.md) | Vault secret uploader |
+| Chart                                                       | Component              |
+|-------------------------------------------------------------|------------------------|
+| [cloudify](../cloudify/README.md)                           | Cloudify manager AIO   |
+| [keycloak](../keycloak/README.md)                           | Keycloak               |
+| [vault](../vault/README.md)                                 | Vault                  |
+| [vault-secret-uploader](../vault-secret-uploader/README.md) | Vault secret uploader  |
+| [prometheus](../prometheus/README.md)                       | Prometheus             |
+| [hpc-exporter](../hpc-exporter/README.md)                   | HPC exporter           |
+| [grafana](../grafana/README.md)                             | Grafana                |
+| [grafana-registry](../grafana-registry/README.md)           | grafana-registry       |
 
 ## Installation
 
@@ -90,9 +94,10 @@ Follow these steps:
   ```
 
 - Create K8s required secrets. These will contain credentials for Cloudify,
-  Keycloak and Vault:
+  Keycloak, Vault and (optionally) Grafana:
 
   ```sh
+  # Note: Cloudify uses 'admin' as login ID
   kubectl create secret generic cloudify \
     -n <orchestrator> \
     --from-literal=cloudify-admin-pw='<adminPassword>'
@@ -105,6 +110,11 @@ Follow these steps:
   kubectl create secret generic vault \
     -n <orchestrator> \
     --from-literal=root-token='<adminToken>'
+
+  kubectl create secret generic grafana \
+    -n orchestrator \
+    --from-literal=admin-user='<adminId>' \
+    --from-literal=admin-pw='<adminPassword>'
   ```
 
   Note: you can use a random password/token generator like
@@ -125,7 +135,7 @@ Follow these steps:
   helm dependency update .
   ```
 
-- Optional: add project-specific configuration `<project>.yaml` under `./values/`:
+- Add project-specific configuration `<project>.yaml` under [`values/`](./values/). E.g.:
 
   ```yaml
   # Values for orchestrator umbrella chart.
@@ -152,6 +162,8 @@ Follow these steps:
   Notes:
   - use "`-f ./values/<project>.yaml`" option to apply project-specific values.
   - chart deployment will be finished once the status of `keycloak-configjob` job
-    becomes "Completed".
-  - `vault-secret-uploader` pod will remain in state `CreateContainerConfigError`
-    until `keycloak-postinstall` secret is created. See [configuration](../README.md#keycloak) section for more information.
+    becomes "Completed"
+    (depending on the environment, it may take several minutes).
+  - `vault-secret-uploader`, `grafana` and `grafana-registry` pods will remain
+    in state `CreateContainerConfigError` until `keycloak-postinstall` secret
+    is created. See [configuration](../README.md#keycloak) section for more information.

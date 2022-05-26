@@ -34,6 +34,12 @@ global:
 
 nameOverride: ""
 
+tags:
+  # Enable/disable the deployment of monitoring charts.
+  # Note: during a dependency update, tags are not taken into account.
+  #       It only takes effect when the chart is installed.
+  monitoring: true
+
 cloudify:
   fullnameOverride: "cloudify"
 
@@ -45,3 +51,16 @@ vault:
 
 vault-secret-uploader:
   fullnameOverride: "vault-secret-uploader"
+
+prometheus:
+  enabled: false
+  fullnameOverride: "prometheus"
+
+hpc-exporter:
+  fullnameOverride: "hpc-exporter"
+
+grafana:
+  fullnameOverride: "grafana"
+
+grafana-registry:
+  fullnameOverride: "grafana-registry"

@@ -2,7 +2,8 @@
 #   Project: Grapevine
 #
 # This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Declare variables to be passed into component charts.
+# Check out ../values.yaml for more information
 
 global:
   projectDomain: "grapevine-project.eu"
