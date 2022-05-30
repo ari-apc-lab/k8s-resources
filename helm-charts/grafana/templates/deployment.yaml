@@ -1,5 +1,7 @@
 {{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
 {{- $keycloakClient := default "exampleClient" .Values.global.config.keycloakClient -}}
+{{- $keycloakHTTPv := ternary "https" "http" .Values.global.tls.enabled -}}
+{{- $projectDomain := default "exampledomain.eu" .Values.global.projectDomain -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,11 +58,11 @@ spec:
                 name: keycloak-postinstall
                 key: client-secret
           - name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
-            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/auth"
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/auth"
           - name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
-            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/token"
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/token"
           - name: GF_AUTH_GENERIC_OAUTH_API_URL
-            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/userinfo"
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/userinfo"
           - name: GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH
             value: "contains(resource_access.{{ $keycloakClient }}.roles[*], 'grafana-admin') && 'Admin' || 'Viewer'"
           - name: GF_SERVER_DOMAIN
