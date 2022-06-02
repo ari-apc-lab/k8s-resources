@@ -156,11 +156,17 @@ Follow these steps:
 - Finally, deploy Orchestrator's chart:
 
   ```sh
-  helm install orchestrator . [-f ./values/<project>.yaml] -n <orchestrator>
+  helm install orchestrator . [-f ./values/<project>.yaml] [options] -n <orchestrator>
   ```
 
   Notes:
   - use "`-f ./values/<project>.yaml`" option to apply project-specific values.
+  - use "`--set global.debugMode.enabled=true`" option to activate debug mode for
+    `vault-secret-uploader` and `grafana-registry`.
+    This enables communication towards Keycloak using `ingress` instead
+    of `service`. This is required for debugging since Keycloak's JWT
+    token is obtained from outside the cluster and it is only valid for
+    the same endpoint.
   - chart deployment will be finished once the status of `keycloak-configjob` job
     becomes "Completed"
     (depending on the environment, it may take several minutes).
