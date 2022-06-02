@@ -1,5 +1,8 @@
 {{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
 {{- $keycloakClient := default "exampleClient" .Values.global.config.keycloakClient -}}
+{{- $keycloakTlsForDebug := ternary "s" "" ( and .Values.global.debugMode.enabled .Values.global.tls.enabled ) -}}
+{{- $projectDomain := default "exampledomain.eu" .Values.global.projectDomain -}}
+{{- $keycloakDomainForDebug := ternary ( printf ".%s" $projectDomain ) "" .Values.global.debugMode.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -61,7 +64,7 @@ spec:
           - name: PROMETHEUS_PORT
             value: "80"
           - name: OIDC_INTROSPECTION_ENDPOINT
-            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
+            value: "http{{ $keycloakTlsForDebug }}://keycloak{{ $keycloakDomainForDebug }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
           - name: OIDC_CLIENT_ID
             value: {{ $keycloakClient | quote }}
           - name: OIDC_CLIENT_SECRET
