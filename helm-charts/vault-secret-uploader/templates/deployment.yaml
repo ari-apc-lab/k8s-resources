@@ -1,4 +1,7 @@
 {{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
+{{- $keycloakTlsForDebug := ternary "s" "" ( and .Values.global.debugMode.enabled .Values.global.tls.enabled ) -}}
+{{- $projectDomain := default "exampledomain.eu" .Values.global.projectDomain -}}
+{{- $keycloakDomainForDebug := ternary ( printf ".%s" $projectDomain ) "" .Values.global.debugMode.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -47,7 +50,7 @@ spec:
                 name: keycloak-postinstall
                 key: client-secret
           - name: OIDC_INTROSPECTION_ENDPOINT
-            value: "http://keycloak/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
+            value: "http{{ $keycloakTlsForDebug }}://keycloak{{ $keycloakDomainForDebug }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/token/introspect"
           - name: VAULT_ADDRESS
             value: "vault"
           - name: VAULT_PORT

@@ -3,6 +3,12 @@
 # Declare variables to be passed into templates.
 
 global:
+  # This enables communication towards Keycloak using ingress instead
+  # of service. This is required for debugging since Keycloak's JWT
+  # token is obtained from outside the cluster and it is only valid for
+  # the same endpoint.
+  debugMode:
+    enabled: false
   # The domain name assigned to the project is a parameter intended
   # to be set from the "orchestrator" umbrella chart.
   # If omitted, "exampledomain.eu" is used for testing porposes.
