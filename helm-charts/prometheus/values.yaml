@@ -112,7 +112,7 @@ service:
   targetPort: 9090
 
 ingress:
-  enabled: false
+  enabled: true
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
