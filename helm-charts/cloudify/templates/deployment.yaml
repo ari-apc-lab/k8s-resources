@@ -47,13 +47,13 @@ spec:
               path: {{ .Values.readinessProbe.path }}
               port: {{ .Values.service.targetPort }}
           {{- end }}
-          {{- if and .Values.config.postStart.enabled .Release.IsInstall }}
           env:
           - name: CLOUDIFY_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: cloudify
                 key: cloudify-admin-pw
+          {{- if and .Values.config.postStart.enabled .Release.IsInstall }}
           lifecycle:
             postStart:
               exec:
