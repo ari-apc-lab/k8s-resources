@@ -7,9 +7,43 @@
 
 global:
   projectDomain: "grapevine-project.eu"
-  tls:
+  debugMode:
     enabled: true
+  tls:
+    enabled: false
     acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
   config:
-    keycloakRealm: "orchestrator"
-    keycloakClient: "grapevine"
+    keycloakRealm: "grapevine"
+    keycloakClient: "orchestrator"
+
+cloudify:
+  ingress:
+    enabled: true
+
+keycloak:
+  ingress:
+    enabled: true
+
+vault:
+  ingress:
+    enabled: true
+
+vault-secret-uploader:
+  ingress:
+    enabled: true
+
+prometheus:
+  ingress:
+    enabled: false
+
+hpc-exporter:
+  ingress:
+    enabled: true
+
+grafana:
+  ingress:
+    enabled: true
+
+grafana-registry:
+  ingress:
+    enabled: true

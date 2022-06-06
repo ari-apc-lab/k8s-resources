@@ -173,3 +173,7 @@ Follow these steps:
   - `vault-secret-uploader`, `grafana` and `grafana-registry` pods will remain
     in state `CreateContainerConfigError` until `keycloak-postinstall` secret
     is created. See [configuration](../README.md#keycloak) section for more information.
+  - It is possible to upgrade the release (without having to uninstall it) by issuing:
+    ```sh
+    helm upgrade orchestrator . [-f ./values/<project>.yaml] [options] -n <orchestrator>
+    ```
