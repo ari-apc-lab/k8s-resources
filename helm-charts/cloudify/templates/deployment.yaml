@@ -53,7 +53,7 @@ spec:
               secretKeyRef:
                 name: cloudify
                 key: cloudify-admin-pw
-          {{- if and .Values.config.postStart.enabled .Release.IsInstall }}
+          {{- if and .Values.config.postStart.enabled }}
           lifecycle:
             postStart:
               exec:
