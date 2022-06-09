@@ -61,8 +61,8 @@ resources:
     cpu: 100m
     memory: 512Mi
   limits:
-    cpu: 100m
-    memory: 512Mi
+    cpu: 500m
+    memory: 812Mi
 
 serviceAccount:
   # Specifies whether a service account should be created
