@@ -36,6 +36,10 @@ spec:
           volumeMounts:
             - name: scripts-vol
               mountPath: /scripts
+            - name: run
+              mountPath: /run
+            - name: runlock
+              mountPath: /run/lock
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
@@ -70,3 +74,11 @@ spec:
         - name: scripts-vol
           configMap:
             name: {{ include "cloudify.fullname" . }}
+        - name: run
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
+        - name: runlock
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
