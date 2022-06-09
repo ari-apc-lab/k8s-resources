@@ -10,7 +10,7 @@ global:
   debugMode:
     enabled: true
   tls:
-    enabled: false
+    enabled: true
     acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
   config:
     keycloakRealm: "grapevine"
