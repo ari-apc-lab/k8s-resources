@@ -35,20 +35,19 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: ["start-dev"]
           env:
-          - name: KEYCLOAK_ADMIN
+          - name: KEYCLOAK_USER
             valueFrom:
               secretKeyRef:
                 name: keycloak
                 key: keycloak-admin
-          - name: KEYCLOAK_ADMIN_PASSWORD
+          - name: KEYCLOAK_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: keycloak
                 key: keycloak-admin-pw
-          - name: KC_PROXY
-            value: "edge"
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}

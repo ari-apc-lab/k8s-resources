@@ -1,0 +1,29 @@
+global:
+  projectDomain: "grapevine-project.eu"
+  tls:
+    enabled: true
+    acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
+
+jobConfig:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 400m
+    memory: 512Mi
+
+ingress:
+  hosts:
+    - hostSubdomain: keycloaktest
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hostSubdomains:
+        - keycloaktest
