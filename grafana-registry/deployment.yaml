@@ -18,7 +18,7 @@ spec:
         hostnames:
         - keycloak.croupier.permedcoe.eu            
       containers:
-      - image: sodaliteh2020/grafana-registry
+      - image: atosariapclab/grafana-registry
         name: grafana-registry
         env:
         - name: GF_ADMIN_USER
