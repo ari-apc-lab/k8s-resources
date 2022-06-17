@@ -4,7 +4,7 @@ metadata:
   labels:
     app: cfy-manager
   name: cfy-manager
-  namespace: permedcoe-services
+  #  namespace: permedcoe-services
 spec:
   replicas: 1
   selector:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: cfy-manager
-        image: atosariapclab/croupier
+        image: atosariapclab/croupier-grapevine:latest
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /data

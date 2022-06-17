@@ -1,0 +1,49 @@
+# Values for orchestrator umbrella chart.
+#   Project: Grapevine
+#
+# This is a YAML-formatted file.
+# Declare variables to be passed into component charts.
+# Check out ../values.yaml for more information
+
+global:
+  projectDomain: "grapevine-project.eu"
+  debugMode:
+    enabled: true
+  tls:
+    enabled: true
+    acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
+  config:
+    keycloakRealm: "grapevine"
+    keycloakClient: "orchestrator"
+
+cloudify:
+  ingress:
+    enabled: true
+
+keycloak:
+  ingress:
+    enabled: true
+
+vault:
+  ingress:
+    enabled: true
+
+vault-secret-uploader:
+  ingress:
+    enabled: true
+
+prometheus:
+  ingress:
+    enabled: false
+
+hpc-exporter:
+  ingress:
+    enabled: true
+
+grafana:
+  ingress:
+    enabled: true
+
+grafana-registry:
+  ingress:
+    enabled: true

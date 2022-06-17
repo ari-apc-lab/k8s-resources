@@ -1,0 +1,109 @@
+# Default values for grafana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into templates.
+
+global:
+  # The domain name assigned to the project is a parameter intended
+  # to be set from the "orchestrator" umbrella chart.
+  # If omitted, "exampledomain.eu" is used for testing porposes.
+  projectDomain: ""
+  tls:
+    enabled: false
+    # The email address to be associated with the ACME account
+    # (make sure it's a valid one).
+    # If omitted, "ari-aida-tech@lists.atos.research.eu" is used.
+    acmeEmail: ""
+    # The URL used to access the ACME server’s directory endpoint.
+    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory" is used.
+    acmeServer: ""
+  config:
+    # Keycloak's realm and client names used if jobConfig.enabled
+    # is set to "true".
+    # If omitted, "exampleRealm" and "exampleClient" are used for
+    # testing porposes
+    keycloakRealm: ""
+    keycloakClient: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+image:
+  repository: "grafana/grafana"
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 472
+  supplementalGroups:
+    - 0
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  path: /robots.txt
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+
+config:
+  pvc:
+    storage: "1Gi"
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 1000m
+  #   memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 750Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
+    nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - hostSubdomain: grafana
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hostSubdomains:
+        - grafana

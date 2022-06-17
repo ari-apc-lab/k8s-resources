@@ -1,0 +1,17 @@
+# Values for orchestrator umbrella chart.
+#   Project: Testing
+#
+# This is a YAML-formatted file.
+# Declare variables to be passed into component charts.
+# Check out ../values.yaml for more information
+
+global:
+  debugMode:
+    enabled: true
+  projectDomain: "test.ari-aidata.eu"
+  tls:
+    enabled: true
+    acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
+  config:
+    keycloakRealm: "orchestrator"
+    keycloakClient: "clientName"

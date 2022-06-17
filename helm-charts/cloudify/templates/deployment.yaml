@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cloudify.fullname" . }}
+  labels:
+    {{- include "cloudify.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cloudify.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cloudify.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "cloudify.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: scripts-vol
+              mountPath: /scripts
+            - name: run
+              mountPath: /run
+            - name: runlock
+              mountPath: /run/lock
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.service.targetPort }}
+          {{- end }}
+          env:
+          - name: CLOUDIFY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cloudify
+                key: cloudify-admin-pw
+          {{- if and .Values.config.postStart.enabled }}
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - "-c"
+                  - "/bin/bash /scripts/poststart.sh ${CLOUDIFY_ADMIN_PASSWORD}"
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: scripts-vol
+          configMap:
+            name: {{ include "cloudify.fullname" . }}
+        - name: run
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"
+        - name: runlock
+          emptyDir:
+            medium: Memory
+            sizeLimit: "2Gi"

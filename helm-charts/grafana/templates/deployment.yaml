@@ -1,0 +1,164 @@
+{{- $keycloakRealm := default "exampleRealm" .Values.global.config.keycloakRealm -}}
+{{- $keycloakClient := default "exampleClient" .Values.global.config.keycloakClient -}}
+{{- $keycloakHTTPv := ternary "https" "http" .Values.global.tls.enabled -}}
+{{- $projectDomain := default "exampledomain.eu" .Values.global.projectDomain -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "grafana.fullname" . }}
+  labels:
+    {{- include "grafana.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "grafana.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "grafana.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "grafana.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: GF_SECURITY_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: admin-user
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: admin-pw
+          - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+            value: {{ $keycloakClient | quote }}
+          - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: keycloak-postinstall
+                key: client-secret
+          - name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/auth"
+          - name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/token"
+          - name: GF_AUTH_GENERIC_OAUTH_API_URL
+            value: "{{ $keycloakHTTPv }}://keycloak.{{ $projectDomain }}/realms/{{ $keycloakRealm }}/protocol/openid-connect/userinfo"
+          - name: GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH
+            value: "contains(resource_access.{{ $keycloakClient }}.roles[*], 'grafana-admin') && 'Admin' || 'Viewer'"
+          - name: GF_SERVER_DOMAIN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_SERVER_DOMAIN
+          - name: GF_SERVER_ROOT_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_SERVER_URL
+          - name: GF_USERS_ALLOW_SIGN_UP
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_USERS_ALLOW_SIGN_UP
+          - name: GF_USERS_DISABLE_LOGIN_FORM
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_USERS_DISABLE_LOGIN_FORM
+          - name: GF_USERS_OAUTH_AUTO_LOGIN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_USERS_OAUTH_AUTO_LOGIN
+          - name: GF_USERS_SIGNOUT_REDIRECT_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_USERS_SIGNOUT_REDIRECT_URL
+          - name: GF_AUTH_GENERIC_OAUTH_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_AUTH_GENERIC_OAUTH_ENABLED
+          - name: GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP
+          - name: GF_AUTH_GENERIC_OAUTH_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_AUTH_GENERIC_OAUTH_NAME
+          - name: GF_AUTH_GENERIC_OAUTH_SCOPES
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "grafana.fullname" . }}
+                key: GF_AUTH_GENERIC_OAUTH_SCOPES
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.service.targetPort }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: 30
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            successThreshold: 1
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: provisioning
+              mountPath: /etc/grafana/provisioning
+            - name: {{ include "grafana.fullname" . }}-pv
+              mountPath: /var/lib/grafana
+      volumes:
+        - name: provisioning
+          configMap:
+            name: {{ include "grafana.fullname" . }}
+            items:
+              - key: datasources
+                path: datasources/datasources.yaml
+              - key: dashboards
+                path: dashboards/dashboards.yaml
+        - name: {{ include "grafana.fullname" . }}-pv
+          persistentVolumeClaim:
+            claimName: {{ include "grafana.fullname" . }}-pvc

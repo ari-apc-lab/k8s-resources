@@ -1,0 +1,87 @@
+# Default values for orchestrator umbrella chart.
+# This is a YAML-formatted file.
+# Important: this file is not intended to be customized for different
+#            deployments/projects. Instead, add project-specific
+#            configuration values (<project>.yaml) under./values/ and
+#            use "-f ./values/<project>.yaml" option to apply them.
+
+global:
+  # Domain assigned to the project. If omitted,
+  # "exampledomain.eu" is used for testing porposes.
+  projectDomain: ""
+  # This enables communication towards Keycloak using ingress instead
+  # of service. This is required for debugging since Keycloak's JWT
+  # token is obtained from outside the cluster and it is only valid for
+  # the same endpoint.
+  debugMode:
+    enabled: false
+  tls:
+    # enable TLS/HTTPS (termination at the Ingress level).
+    enabled: false
+    # The email address to be associated with the ACME account
+    # (make sure it's a valid one).
+    # If omitted, "ari-aida-tech@lists.atos.research.eu" is used.
+    acmeEmail: ""
+    # The URL used to access the ACME server’s directory endpoint.
+    # If omitted, "https://acme-staging-v02.api.letsencrypt.org/directory"
+    # is used. This endpoint will not generate actual certificates. For fully
+    # working certificates "https://acme-v02.api.letsencrypt.org/directory"
+    # must be used instead. Do not use production endpoint for testing
+    # as Let's Encrypt has limited rates for issuing certificates for certain
+    # domain-IP pairs. If the limit is reached, certificate generation will
+    # stop working for a few days.
+    acmeServer: ""
+  config:
+    # Keycloak's realm and client names to be configured.
+    # If omitted, "exampleRealm" and "exampleClient" are used for
+    # testing porposes.
+    keycloakRealm: ""
+    keycloakClient: ""
+
+nameOverride: ""
+
+tags:
+  # Enable/disable the deployment of monitoring charts.
+  # Note: during a dependency update, tags are not taken into account.
+  #       It only takes effect when the chart is installed.
+  monitoring: true
+
+cloudify:
+  fullnameOverride: "cloudify"
+  ingress:
+    enabled: false
+
+keycloak:
+  fullnameOverride: "keycloak"
+  ingress:
+    enabled: true
+
+vault:
+  fullnameOverride: "vault"
+  ingress:
+    enabled: false
+
+vault-secret-uploader:
+  fullnameOverride: "vault-secret-uploader"
+  ingress:
+    enabled: false
+
+prometheus:
+  fullnameOverride: "prometheus"
+  ingress:
+    enabled: false
+
+hpc-exporter:
+  fullnameOverride: "hpc-exporter"
+  ingress:
+    enabled: false
+
+grafana:
+  fullnameOverride: "grafana"
+  ingress:
+    enabled: true
+
+grafana-registry:
+  fullnameOverride: "grafana-registry"
+  ingress:
+    enabled: false

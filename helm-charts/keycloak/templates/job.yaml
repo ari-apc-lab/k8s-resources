@@ -1,0 +1,58 @@
+{{- if and .Values.jobConfig.enabled .Release.IsInstall }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "keycloak.fullname" . }}-configjob
+  labels:
+    {{- include "keycloak.labels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.jobConfig.backoffLimit }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "keycloak.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "keycloak.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.jobConfig.restartPolicy }}
+      containers:
+        - name: {{ include "keycloak.fullname" . }}-configjob
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.jobImage.repository }}:{{ .Values.jobImage.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: config-vol
+              mountPath: /config
+          env:
+          - name: KEYCLOAK_ADMIN
+            valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: keycloak-admin
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: keycloak
+                key: keycloak-admin-pw
+          - name: KEYCLOAK_REALM
+            value: {{ default "exampleRealm" .Values.global.config.keycloakRealm | quote }}
+          command: ["/bin/sh", "/config/create_realm_client.sh"]
+      volumes:
+        - name: config-vol
+          configMap:
+            name: {{ include "keycloak.fullname" . }}
+{{- end }}
