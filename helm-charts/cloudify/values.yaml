@@ -41,7 +41,14 @@ securityContext:
   # runAsUser: 1000
 
 readinessProbe:
-  enabled: false # "/console" does not work
+  enabled: true
+  initialDelaySeconds: 240
+  periodSeconds: 25
+  failureThreshold: 8
+  path: /console
+
+livenessProbe:
+  enabled: true
   initialDelaySeconds: 10
   path: /console
 
@@ -58,11 +65,11 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
-    cpu: 100m
-    memory: 512Mi
+    cpu: 750m
+    memory: 1Gi
   limits:
-    cpu: 500m
-    memory: 812Mi
+    cpu: 2500m
+    memory: 3Gi
 
 serviceAccount:
   # Specifies whether a service account should be created
