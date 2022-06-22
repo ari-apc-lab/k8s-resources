@@ -3,7 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: keycloak
-  namespace: permedcoe-services
+  namespace: permedcoe
 spec:
   ports:
   - name: keycloak

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: vault-secret-uploader
-  namespace: permedcoe-services
+  namespace: permedcoe
 spec:
   ports:
   - name: vault-secret-uploader

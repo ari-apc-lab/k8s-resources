@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: alertmanager
-  namespace: permedcoe-services
+  namespace: permedcoe
   labels:
     app: alertmanager
 data:

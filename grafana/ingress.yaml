@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   name: grafana
-  namespace: permedcoe-services
+  namespace: permedcoe
 spec:
   rules:
   - host: grafana.croupier.permedcoe.eu

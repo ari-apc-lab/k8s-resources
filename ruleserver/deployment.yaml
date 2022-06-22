@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ruleserver
-  namespace: permedcoe-services
+  namespace: permedcoe
 spec:
   selector:
     matchLabels:

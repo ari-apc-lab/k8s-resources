@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana
-  namespace: permedcoe-services
+  namespace: permedcoe
 data:
   GF_SERVER_DOMAIN: grafana
   GF_SERVER_URL: http://grafana.croupier.permedcoe.eu

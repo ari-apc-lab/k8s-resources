@@ -3,7 +3,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: grafana
-  namespace: permedcoe-services
+  namespace: permedcoe
 spec:
   ports:
   - name: grafana
