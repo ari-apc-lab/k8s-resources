@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
   - name: hpc-exporter
-    port: 9110
+    port: 80
     protocol: TCP
     targetPort: 9110
   selector:
