@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: backend
+  namespace: permedcoe
+spec:
+  ports:
+  - name: backend
+    port: 80 
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: backend
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+

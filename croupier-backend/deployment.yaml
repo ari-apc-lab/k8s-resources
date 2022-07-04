@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: permedcoe
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: atosariapclab/croupier-backend
+        name: backend
+        env:
+        - name: OIDC_RP_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: client-id
+        - name: OIDC_RP_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: client-secret
+        - name: KEYCLOAK_URL
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: keycloak-host
+        - name: OIDC_OP_AUTHORIZATION_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: auth-url
+        - name: OIDC_OP_TOKEN_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: token-url
+        - name: OIDC_OP_USER_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: keycloak
+              key: api-url
+        - name: ORCHESTRATOR_HOST
+          valueFrom:
+            secretKeyRef:
+              name: cloudify
+              key: cloudify-host
+        - name: ORCHESTRATOR_USER
+          value: admin
+        - name: ORCHESTRATOR_PASS
+          valueFrom:
+            secretKeyRef:
+              name: cloudify
+              key: cloudify-password
+        - name: ORCHESTRATOR_TENANT
+          value: default_tenant
+        - name: VAULT_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: vault
+              key: vault-host
+        - name: VAULT_PORT
+          valueFrom:
+            secretKeyRef:
+              name: vault
+              key: vault-port
+        - name: MARKETPLACE_URL
+          secretKeyRef:
+              name: marketplace
+              key: marketplace-url
+        - name: M_CONSUMER_KEY
+          secretKeyRef:
+              name: marketplace
+              key: consumer-key
+        - name: M_CONSUMER_SECRET
+          secretKeyRef:
+              name: marketplace
+              key: consumer-secret
+        volumeMounts:
+        - mountPath: /backend
+          name: backend
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+      volumes:
+      - name: backend
+        hostPath:
+          path: .
+ 

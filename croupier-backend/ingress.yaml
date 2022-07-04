@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
+    nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: backend
+  namespace: permedcoe
+spec:
+  rules:
+  - host: backend.croupier.permedcoe.eu
+    http:
+      paths:
+      - backend:
+          service:
+            name: backend
+            port: 
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - backend.croupier.permedcoe.eu
+    secretName: backend.croupier.permedcoe.eu
