@@ -72,25 +72,21 @@ spec:
               name: vault
               key: vault-port
         - name: MARKETPLACE_URL
-          secretKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: marketplace
               key: marketplace-url
         - name: M_CONSUMER_KEY
-          secretKeyRef:
+          valueFrom:  
+            secretKeyRef:
               name: marketplace
               key: consumer-key
         - name: M_CONSUMER_SECRET
-          secretKeyRef:
+          valueFrom:
+            secretKeyRef:
               name: marketplace
               key: consumer-secret
-        volumeMounts:
-        - mountPath: /backend
-          name: backend
         ports:
         - containerPort: 8000
           protocol: TCP
-      volumes:
-      - name: backend
-        hostPath:
-          path: .
  
