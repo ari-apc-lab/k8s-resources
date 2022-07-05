@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: cfy-manager-test
-  name: cfy-manager-test
+    app: cloudify
+  name: cloudify
   namespace: permedcoe
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cfy-manager-test
+      app: cloudify
   template:
     metadata:
       labels:
-        app: cfy-manager-test
+        app: cloudify
     spec:
       containers:
-      - name: cfy-manager
+      - name: cloudify
         image: atosariapclab/cloudify-permedcoe:6.2.0
         imagePullPolicy: Always
         volumeMounts:

@@ -20,7 +20,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: cfy-manager-test
+              name: cloudify
               port: 
                 number: 80
   tls:
