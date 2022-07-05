@@ -27,5 +27,5 @@ data:
       - job_name: 'hpc-exporter'
         scrape_interval: 5s
         static_configs:
-          - targets: ['hpc-exporter:9110']
+          - targets: ['hpc-exporter:80']
 
