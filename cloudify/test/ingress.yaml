@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe
 spec:
   rules:
-    - host: cloudify.croupier.permedcoe.eu
+    - host: cloudify.croupier.ari-aidata.eu
       http:
         paths:
         - path: /
@@ -25,5 +25,5 @@ spec:
                 number: 80
   tls:
   - hosts:
-    - cloudify.croupier.permedcoe.eu
-    secretName: cloudify.croupier.permedcoe.eu
+    - cloudify.croupier.ari-aidata.eu
+    secretName: cloudify.croupier.ari-aidata.eu

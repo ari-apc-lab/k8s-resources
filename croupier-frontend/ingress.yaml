@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe
 spec:
   rules:
-  - host: frontend.croupier.permedcoe.eu
+  - host: frontend.croupier.ari-aidata.eu
     http:
       paths:
       - backend:
@@ -25,5 +25,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - frontend.croupier.permedcoe.eu
-    secretName: frontend.croupier.permedcoe.eu
+    - frontend.croupier.ari-aidata.eu
+    secretName: frontend.croupier.ari-aidata.eu

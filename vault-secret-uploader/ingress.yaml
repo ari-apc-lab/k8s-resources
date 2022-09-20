@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe
 spec:
   rules:
-  - host: vault-secret-uploader.croupier.permedcoe.eu
+  - host: vault-secret-uploader.croupier.ari-aidata.eu
     http:
       paths:
       - backend:
@@ -25,5 +25,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - vault-secret-uploader.croupier.permedcoe.eu
-    secretName: vault-secret-uploader.croupier.permedcoe.eu
+    - vault-secret-uploader.croupier.ari-aidata.eu
+    secretName: vault-secret-uploader.croupier.ari-aidata.eu

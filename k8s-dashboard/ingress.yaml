@@ -11,7 +11,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: k8s.croupier.permedcoe.eu
+  - host: k8s.croupier.ari-aidata.eu
     http:
       paths:
       - backend:

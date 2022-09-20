@@ -13,7 +13,7 @@ metadata:
   namespace: permedcoe
 spec:
   rules:
-  - host: grafana.croupier.permedcoe.eu
+  - host: grafana.croupier.ari-aidata.eu
     http:
       paths:
       - path: /
@@ -25,5 +25,5 @@ spec:
               number: 3000
   tls:
   - hosts:
-    - grafana.croupier.permedcoe.eu
-    secretName: grafana.croupier.permedcoe.eu
+    - grafana.croupier.ari-aidata.eu
+    secretName: grafana.croupier.ari-aidata.eu

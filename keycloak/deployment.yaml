@@ -16,7 +16,7 @@ spec:
       hostAliases:
       - ip: 10.152.183.42
         hostnames:
-        - grafana.croupier.permedcoe.eu      
+        - grafana.croupier.ari-aidata.eu      
       containers:
       - name: keycloak
         image: jboss/keycloak:16.1.1
