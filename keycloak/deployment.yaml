@@ -46,6 +46,10 @@ spec:
               secretKeyRef:
                 name: keycloak
                 key: keycloak-admin-pw
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
+          - name: KEYCLOAK_FRONTEND_URL
+            value: "https://keycloak.croupier.ari-aidata.eu/auth/"
       volumes:
         - name: keycloak-realm
           secret:

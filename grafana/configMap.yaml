@@ -5,7 +5,7 @@ metadata:
   namespace: permedcoe
 data:
   GF_SERVER_DOMAIN: grafana
-  GF_SERVER_URL: http://grafana.croupier.ari-aidata.eu
+  GF_SERVER_URL: https://grafana.croupier.ari-aidata.eu
   GF_USERS_ALLOW_SIGN_UP: "false"
   GF_USERS_DISABLE_LOGIN_FORM: "true"
   GF_USERS_OAUTH_AUTO_LOGIN: "true"

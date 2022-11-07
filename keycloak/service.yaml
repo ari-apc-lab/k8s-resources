@@ -10,10 +10,6 @@ spec:
     port: 80 
     protocol: TCP
     targetPort: 8080
-  - name: keycloak2
-    port: 8443
-    protocol: TCP
-    targetPort: 8443 
   selector:
     app: keycloak
   sessionAffinity: None
