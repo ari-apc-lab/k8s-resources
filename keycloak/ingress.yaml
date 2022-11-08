@@ -5,7 +5,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/cors-allow-headers: content-type, Authorization, Tenant
     nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS
-    nginx.ingress.kubernetes.io/cors-allow-origin: 'http://localhost:4200,https://grafana.croupier.ari-aidata.eu,https:://frontend.croupier.ari-aidata.eu'
+    nginx.ingress.kubernetes.io/cors-allow-origin: 'http://localhost:4200,https://grafana.croupier.ari-aidata.eu,https://frontend.croupier.ari-aidata.eu'
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
