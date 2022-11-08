@@ -35,7 +35,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: keycloak
-              key: introspect-url
+              key: introspect-url-k8s
         - name: OIDC_CLIENT_SECRET
           valueFrom:
             secretKeyRef:

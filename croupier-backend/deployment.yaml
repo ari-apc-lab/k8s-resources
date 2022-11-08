@@ -36,17 +36,17 @@ spec:
           valueFrom:
             secretKeyRef:
               name: keycloak
-              key: auth-url
+              key: auth-url-k8s
         - name: OIDC_OP_TOKEN_ENDPOINT
           valueFrom:
             secretKeyRef:
               name: keycloak
-              key: token-url
+              key: token-url-k8s
         - name: OIDC_OP_USER_ENDPOINT
           valueFrom:
             secretKeyRef:
               name: keycloak
-              key: api-url
+              key: api-url-k8s
         - name: ORCHESTRATOR_HOST
           valueFrom:
             secretKeyRef:
