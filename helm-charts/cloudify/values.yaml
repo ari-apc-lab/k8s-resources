@@ -66,10 +66,10 @@ resources:
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
     cpu: 750m
-    memory: 1Gi
+    memory: 2Gi
   limits:
     cpu: 2500m
-    memory: 3Gi
+    memory: 4Gi
 
 serviceAccount:
   # Specifies whether a service account should be created
